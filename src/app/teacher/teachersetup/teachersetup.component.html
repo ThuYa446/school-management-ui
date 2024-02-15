@@ -1,2 +1,30 @@
 <app-menu></app-menu>
-<p>teachersetup works!</p>
+<div class="container">
+    <form class="col-md-4">
+        <legend>Teacher Setup Form</legend>
+        <div class="row" style="margin-left: 0px;">
+            <button class="btn btn-primary" (click)="newTeacherForm()">New</button>&nbsp;
+            <button class="btn btn-primary" (click)="saveTeacher()">Submit</button>&nbsp;
+        </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Teacher Name" 
+            [(ngModel)]=teacher.name [ngModelOptions]='{standalone: true}'>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" placeholder="Teacher Email"
+            [(ngModel)]=teacher.email [ngModelOptions]='{standalone: true}' [readonly]="id!=0">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" placeholder="Teacher Phone"
+            [(ngModel)]=teacher.phoneNo [ngModelOptions]='{standalone: true}'>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <textarea class="form-control" id="address" placeholder="Teacher Address"
+            [(ngModel)]=teacher.address [ngModelOptions]='{standalone: true}'></textarea>
+        </div>
+    </form>
+</div>

@@ -32,6 +32,14 @@ constructor(private httpClient: HttpClient, private message: MessageService) { }
     );
   }
 
+  doPut(url: string, json: JSON): Observable<any> {
+    return this.httpClient.put(url, json, this.httpOptions).pipe(
+      // tap(_ => this.log('Http Requested Successfully!')),
+      catchError(this.handleError)
+    );
+  }
+
+
   checkServerErrorConnection(): boolean {
     if (this.message.message.length === 1 ) {
       return true;

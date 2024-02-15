@@ -6,6 +6,8 @@ import { AuthGuard } from './services/auth-guard.service';
 import { HomeComponent } from './home/home.component';
 import { TeacherlistComponent } from './teacher/teacherlist/teacherlist.component';
 import { TeachersetupComponent } from './teacher/teachersetup/teachersetup.component';
+import { SubjectlistComponent } from './subject/subjectlist/subjectlist.component';
+import { SubjectsetupComponent } from './subject/subjectsetup/subjectsetup.component';
 
 
 const routes: Routes = [
@@ -41,6 +43,21 @@ const routes: Routes = [
   {
     path: 'teacher/:id',
     component: TeachersetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'subjects',
+    component: SubjectlistComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'subject',
+    component: SubjectsetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'subject/:id',
+    component: SubjectsetupComponent,
     canActivate: [AuthGuard]
   }
 ];

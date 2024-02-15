@@ -3,6 +3,6 @@ export class Subject {
     id: number;
     title: string;
     studentDto: Student[];
-    createdAt:Date;
-    updatedAt:Date;
+    createdAt:string;
+    updatedAt:string;
 }

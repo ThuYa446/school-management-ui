@@ -1,41 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Teacher } from 'src/app/model/Teacher';
+import { Student } from 'src/app/model/Student';
 import { HttpClientService } from 'src/app/services/httpClient.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-teacherlist',
-  templateUrl: './teacherlist.component.html',
-  styleUrls: ['./teacherlist.component.css']
+  selector: 'app-studentlist',
+  templateUrl: './studentlist.component.html',
+  styleUrls: ['./studentlist.component.css']
 })
-export class TeacherlistComponent implements OnInit {
-  apiUrl = environment.apiUrl+'/teachers';
-  teachers : Teacher [] = [];
+export class StudentlistComponent implements OnInit {
+  apiUrl = environment.apiUrl+'/students';
+  students : Student [] = [];
 
   constructor(private http:HttpClientService,
     private ics: IntercomService,private router: Router) { 
-      this.getAllTeachers();
+      this.getAllStudents();
   }
 
   ngOnInit() {
   }
 
-  newTeacher(){
-    this.router.navigate(['teacher',0]);
+  newStudent(){
+    this.router.navigate(['student',0]);
   }
 
-  getAllTeachers(){
+  getAllStudents(){
    
     this.http.doGet(this.apiUrl).subscribe(
       (data) => {
-        if(data!= null || data != undefined){
-            this.teachers = data;
-            this.teachers.forEach(teacher => {
-              teacher.createdAt = new Date(teacher.createdAt).toLocaleString();
-              teacher.updatedAt = new Date(teacher.updatedAt).toLocaleString();
+        if(data!= null && data != undefined && data.length != 0){
+            this.students = data;
+            this.students.forEach(student => {
+              student.createdAt = new Date(student.createdAt).toLocaleString();
+              student.updatedAt = new Date(student.updatedAt).toLocaleString();
             });
+        }else{
+          this.showCustomMsg('No data found',1);
         }
       },
       (error) => {
@@ -52,7 +54,7 @@ export class TeacherlistComponent implements OnInit {
   }
 
   editForm(id:number){
-    this.router.navigate(['teacher',id]);
+    this.router.navigate(['student',id]);
   }
 
 }

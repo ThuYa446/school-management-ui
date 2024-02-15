@@ -1,0 +1,38 @@
+<app-menu></app-menu>
+<div class="container">
+    <form class="col-md-4">
+        <legend>Student Setup Form</legend>
+        <div class="row" style="margin-left: 0px;">
+            <button class="btn btn-primary" (click)="newStudentForm()">New</button>&nbsp;
+            <button class="btn btn-primary" (click)="saveStudent()">Submit</button>&nbsp;
+        </div>
+        <div class="form-group">
+            <label for="name">Student Type:</label>
+            <select class="form-control" id="studentType" [(ngModel)]="student.studentType" [ngModelOptions]='{standalone: true}'>
+                <option *ngFor="let stuType of studentTypes" [value]="stuType">
+                    {{stuType}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Student Name" 
+            [(ngModel)]=student.name [ngModelOptions]='{standalone: true}'>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" placeholder="Student Email"
+            [(ngModel)]=student.email [ngModelOptions]='{standalone: true}' [readonly]="id!=0">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" placeholder="Student Phone"
+            [(ngModel)]=student.phoneNo [ngModelOptions]='{standalone: true}'>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <textarea class="form-control" id="address" placeholder="Student Address"
+            [(ngModel)]=student.address [ngModelOptions]='{standalone: true}'></textarea>
+        </div>
+    </form>
+</div>

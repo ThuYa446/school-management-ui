@@ -8,6 +8,8 @@ import { TeacherlistComponent } from './teacher/teacherlist/teacherlist.componen
 import { TeachersetupComponent } from './teacher/teachersetup/teachersetup.component';
 import { SubjectlistComponent } from './subject/subjectlist/subjectlist.component';
 import { SubjectsetupComponent } from './subject/subjectsetup/subjectsetup.component';
+import { StudentlistComponent } from './student/studentlist/studentlist.component';
+import { StudentsetupComponent } from './student/studentsetup/studentsetup.component';
 
 
 const routes: Routes = [
@@ -31,7 +33,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'teacherlist',
+    path: 'teachers',
     component: TeacherlistComponent,
     canActivate: [AuthGuard]
   },
@@ -58,6 +60,21 @@ const routes: Routes = [
   {
     path: 'subject/:id',
     component: SubjectsetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'students',
+    component: StudentlistComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'student',
+    component: StudentsetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'student/:id',
+    component: StudentsetupComponent,
     canActivate: [AuthGuard]
   }
 ];

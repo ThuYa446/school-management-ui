@@ -21,6 +21,8 @@ import { TeachersetupComponent } from './teacher/teachersetup/teachersetup.compo
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { SubjectlistComponent } from './subject/subjectlist/subjectlist.component';
 import { SubjectsetupComponent } from './subject/subjectsetup/subjectsetup.component';
+import { StudentlistComponent } from './student/studentlist/studentlist.component';
+import { StudentsetupComponent } from './student/studentsetup/studentsetup.component';
 
 @NgModule({
    declarations: [
@@ -33,6 +35,8 @@ import { SubjectsetupComponent } from './subject/subjectsetup/subjectsetup.compo
       TeachersetupComponent,
       SubjectlistComponent,
       SubjectsetupComponent,
+      StudentlistComponent,
+      StudentsetupComponent,
    ],
    imports: [
       BrowserModule,

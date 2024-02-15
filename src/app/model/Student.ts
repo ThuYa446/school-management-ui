@@ -5,6 +5,6 @@ export class Student{
     phoneNo:string;
     address:string;
     studentType:string;
-    createdAt:Date;
-    updatedAt:Date;
+    createdAt:string;
+    updatedAt:string;
 }

@@ -1,0 +1,27 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+    <div class="row" style="margin: 10px;padding: 10px;">
+        <button class="btn btn-primary" (click)="newStudent()">New</button>&nbsp;
+    </div>
+    <table class="table table-striped">
+        <tr class="table-primary">
+            <th scope="col">#</th>
+            <th scope="col">Student Type</th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Student Email</th>
+            <th scope="col">Student Phone</th>
+            <th scope="col">Student Address</th>
+            <th scope="col">Created Date Time</th>
+            <th scope="col">Updated Date Time</th>
+        </tr>
+        <tr *ngFor="let student of students" class="table-secondary">
+            <td><button class="btn btn-primary" (click)="editForm(student.id)">Edit</button></td>
+            <td>{{student.studentType}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.phoneNo}}</td>
+            <td>{{student.address}}</td>
+            <td>{{student.createdAt}}</td>
+            <td>{{student.updatedAt}}</td>
+    </table>
+</div>

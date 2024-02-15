@@ -13,7 +13,7 @@ import { AuthenticationService } from '../services/authentication-service.servic
 })
 export class LoginComponent implements OnInit {
   apiUrl = environment.apiUrl+'/auth/login';
-  user : User = {};
+  user : User = new User();
   constructor(private http:HttpClientService,
     private ics: IntercomService,
     private authService: AuthenticationService,

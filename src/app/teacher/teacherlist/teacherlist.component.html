@@ -1,0 +1,22 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+    <table class="table table-striped">
+        <tr class="table-primary">
+            <th scope="col">#</th>
+            <th scope="col">Teacher Name</th>
+            <th scope="col">Teacher Email</th>
+            <th scope="col">Teacher Phone</th>
+            <th scope="col">Teacher Address</th>
+            <th scope="col">Created Date Time</th>
+            <th scope="col">Updated Date Time</th>
+        </tr>
+        <tr *ngFor="let teacher of teachers" class="table-secondary">
+            <td><button class="btn btn-primary" (click)="editForm(teacher.id)">Edit</button></td>
+            <td>{{teacher.name}}</td>
+            <td>{{teacher.email}}</td>
+            <td>{{teacher.phoneNo}}</td>
+            <td>{{teacher.address}}</td>
+            <td>{{teacher.createdAt}}</td>
+            <td>{{teacher.updatedAt}}</td>
+    </table>
+</div>

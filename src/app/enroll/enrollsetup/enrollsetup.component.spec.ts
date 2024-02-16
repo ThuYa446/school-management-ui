@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdvSearchComponent } from './adv-search.component';
+import { EnrollsetupComponent } from './enrollsetup.component';
 
-describe('AdvSearchComponent', () => {
-  let component: AdvSearchComponent;
-  let fixture: ComponentFixture<AdvSearchComponent>;
+describe('EnrollsetupComponent', () => {
+  let component: EnrollsetupComponent;
+  let fixture: ComponentFixture<EnrollsetupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdvSearchComponent ]
+      declarations: [ EnrollsetupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdvSearchComponent);
+    fixture = TestBed.createComponent(EnrollsetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

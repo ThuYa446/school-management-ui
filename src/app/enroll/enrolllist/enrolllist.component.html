@@ -1,0 +1,21 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+    <table class="table table-striped">
+        <tr class="table-primary" style="margin-top:20px;">
+            <th scope="col">#</th>
+            <th scope="col">Subject Title</th>
+            <th scope="col">Enrolled Student</th>
+        </tr>
+        <tr class="table-secondary" *ngFor="let subject of subjects">
+            <td><button class="btn btn-primary" (click)="editForm(subject.id)">Edit</button></td>
+            <td>{{subject.title}}</td>
+            <td>
+                <ng-container *ngFor="let student of subject.studentDto">
+                    <div><span>Name: </span>{{student.name}}</div> 
+                    <div><span>Email: </span>{{student.email}}</div> 
+                    <div><span>Type: </span> {{student.studentType}}</div>
+                </ng-container>
+            </td>
+        </tr>
+    </table>
+</div>

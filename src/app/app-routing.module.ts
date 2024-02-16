@@ -10,6 +10,9 @@ import { SubjectlistComponent } from './subject/subjectlist/subjectlist.componen
 import { SubjectsetupComponent } from './subject/subjectsetup/subjectsetup.component';
 import { StudentlistComponent } from './student/studentlist/studentlist.component';
 import { StudentsetupComponent } from './student/studentsetup/studentsetup.component';
+import { EnrolllistComponent } from './enroll/enrolllist/enrolllist.component';
+import { EnrollsetupComponent } from './enroll/enrollsetup/enrollsetup.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 
 const routes: Routes = [
@@ -38,11 +41,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'teacher',
-    component: TeachersetupComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'teacher/:id',
     component: TeachersetupComponent,
     canActivate: [AuthGuard]
@@ -50,11 +48,6 @@ const routes: Routes = [
   {
     path: 'subjects',
     component: SubjectlistComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'subject',
-    component: SubjectsetupComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -68,15 +61,21 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'student',
+    path: 'student/:id',
     component: StudentsetupComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'student/:id',
-    component: StudentsetupComponent,
+    path: 'enrolls',
+    component: EnrolllistComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: 'enroll/:id',
+    component: EnrollsetupComponent,
+    canActivate: [AuthGuard]
+  },
+  { path: '**', component: PagenotfoundComponent }
 ];
 
 @NgModule({

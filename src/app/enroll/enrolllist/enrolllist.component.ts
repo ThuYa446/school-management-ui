@@ -1,51 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Student } from 'src/app/model/Student';
+import { Subject } from 'src/app/model/Subject';
 import { HttpClientService } from 'src/app/services/httpClient.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-studentlist',
-  templateUrl: './studentlist.component.html',
-  styleUrls: ['./studentlist.component.css']
+  selector: 'app-enrolllist',
+  templateUrl: './enrolllist.component.html',
+  styleUrls: ['./enrolllist.component.css']
 })
-export class StudentlistComponent implements OnInit {
-  apiUrl = environment.apiUrl+'/students';
-  students : Student [] = [];
+export class EnrolllistComponent implements OnInit {
+  apiUrl = environment.apiUrl+'/subjects';
+  subjects : Subject [] = [];
+
 
   constructor(private http:HttpClientService,
     private ics: IntercomService,private router: Router) { 
-      this.getAllStudents();
+      this.getAllSubjects();
   }
 
   ngOnInit() {
   }
 
-  newStudent(){
-    this.router.navigate(['student',0]);
-  }
-
-  getAllStudents(){
-   
+  getAllSubjects(){
     this.http.doGet(this.apiUrl).subscribe(
       (data) => {
         if(data!= null && data != undefined && data.length != 0){
-            this.students = data;
-            this.students.forEach(student => {
-              student.createdAt = new Date(student.createdAt).toLocaleString();
-              student.updatedAt = new Date(student.updatedAt).toLocaleString();
+            this.subjects = data;
+            this.subjects.forEach(subject => {
+              subject.createdAt = new Date(subject.createdAt).toLocaleString();
+              subject.updatedAt = new Date(subject.updatedAt).toLocaleString();
             });
         }else{
           this.showCustomMsg('No data found',1);
         }
       },
       (error) => {
-        if(error == undefined){
-          this.showCustomMsg('Network Connection Error',2);
-        }else{
-          this.showCustomMsg(error,2);
-        }
+        this.showCustomMsg(error,2);
       }
     );
   }
@@ -58,7 +51,7 @@ export class StudentlistComponent implements OnInit {
   }
 
   editForm(id:number){
-    this.router.navigate(['student',id]);
+    this.router.navigate(['enroll',id]);
   }
 
 }

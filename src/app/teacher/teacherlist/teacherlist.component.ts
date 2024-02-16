@@ -39,7 +39,11 @@ export class TeacherlistComponent implements OnInit {
         }
       },
       (error) => {
-        this.showCustomMsg(error,2);
+        if(error == undefined){
+          this.showCustomMsg('Network Connection Error',2);
+        }else{
+          this.showCustomMsg(error,2);
+        }
       }
     );
   }

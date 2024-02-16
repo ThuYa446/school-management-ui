@@ -24,19 +24,19 @@ export class LoginComponent implements OnInit {
   }
 
   showCustomMsg(msg, type) {
-    if ( type === true) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Information' }); }
-    if ( type === false) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Error' }); }
-    if ( type === undefined) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
-    if ( type === null) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Success' }); }
+    if ( type === 1) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Information' }); }
+    if ( type === 2) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Error' }); }
+    if ( type === 3) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
+    if ( type === 4) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Success' }); }
   }
 
   validateLogIn(){
     if(this.user.email == null || this.user.email == undefined || this.user.email == ''){
-      this.showCustomMsg('Email is required',true);
+      this.showCustomMsg('Email is required',1);
       return false;
     }
     if(this.user.password == null || this.user.password == undefined || this.user.password == ''){
-      this.showCustomMsg('Password is required',true);
+      this.showCustomMsg('Password is required',1);
       return false;
     }
     return true;
@@ -54,7 +54,11 @@ export class LoginComponent implements OnInit {
           }
         },
         (error) => {
-          this.showCustomMsg(error,false);
+          if(error == undefined){
+            this.showCustomMsg('Network Connection Error',2);
+          }else{
+            this.showCustomMsg(error,2);
+          }
         }
       );
     }

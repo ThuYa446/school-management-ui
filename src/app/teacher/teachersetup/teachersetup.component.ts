@@ -55,7 +55,11 @@ export class TeachersetupComponent implements OnInit {
             this.router.navigate(['teachers']);
           },
           (error) => {
-            this.showCustomMsg(error,2);
+            if(error == undefined){
+              this.showCustomMsg('Network Connection Error',2);
+            }else{
+              this.showCustomMsg(error,2);
+            }
           }
         );
       }else{
@@ -65,7 +69,11 @@ export class TeachersetupComponent implements OnInit {
             this.router.navigate(['teachers']);
           },
           (error) => {
-            this.showCustomMsg(error,2);
+            if(error == undefined){
+              this.showCustomMsg('Network Connection Error',2);
+            }else{
+              this.showCustomMsg(error,2);
+            }
           }
         );
       }
@@ -80,7 +88,11 @@ export class TeachersetupComponent implements OnInit {
         }
       },
       (error) => {
-        this.showCustomMsg(error,2);
+        if(error == undefined){
+          this.showCustomMsg('Network Connection Error',2);
+        }else{
+          this.showCustomMsg(error,2);
+        }
       }
     );
   }

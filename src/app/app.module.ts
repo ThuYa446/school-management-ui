@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientService} from './services/httpClient.service';
 import {IntercomService} from './services/intercom.service';
-import { AdvSearchComponent } from './adv-search/adv-search.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,11 +22,13 @@ import { SubjectlistComponent } from './subject/subjectlist/subjectlist.componen
 import { SubjectsetupComponent } from './subject/subjectsetup/subjectsetup.component';
 import { StudentlistComponent } from './student/studentlist/studentlist.component';
 import { StudentsetupComponent } from './student/studentsetup/studentsetup.component';
+import { EnrolllistComponent } from './enroll/enrolllist/enrolllist.component';
+import { EnrollsetupComponent } from './enroll/enrollsetup/enrollsetup.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      AdvSearchComponent,
       LoginComponent,
       MenuComponent,
       HomeComponent,
@@ -37,6 +38,9 @@ import { StudentsetupComponent } from './student/studentsetup/studentsetup.compo
       SubjectsetupComponent,
       StudentlistComponent,
       StudentsetupComponent,
+      EnrolllistComponent,
+      EnrollsetupComponent,
+      PagenotfoundComponent,
    ],
    imports: [
       BrowserModule,

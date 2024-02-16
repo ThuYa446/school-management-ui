@@ -61,7 +61,11 @@ export class StudentsetupComponent implements OnInit {
             this.router.navigate(['students']);
           },
           (error) => {
-            this.showCustomMsg(error,2);
+            if(error == undefined){
+              this.showCustomMsg('Network Connection Error',2);
+            }else{
+              this.showCustomMsg(error,2);
+            }
           }
         );
       }else{
@@ -71,7 +75,11 @@ export class StudentsetupComponent implements OnInit {
             this.router.navigate(['students']);
           },
           (error) => {
-            this.showCustomMsg(error,2);
+            if(error == undefined){
+              this.showCustomMsg('Network Connection Error',2);
+            }else{
+              this.showCustomMsg(error,2);
+            }
           }
         );
       }
@@ -86,7 +94,11 @@ export class StudentsetupComponent implements OnInit {
         }
       },
       (error) => {
-        this.showCustomMsg(error,2);
+        if(error == undefined){
+          this.showCustomMsg('Network Connection Error',2);
+        }else{
+          this.showCustomMsg(error,2);
+        }
       }
     );
   }

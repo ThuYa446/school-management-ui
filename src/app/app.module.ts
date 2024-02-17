@@ -25,6 +25,8 @@ import { StudentsetupComponent } from './student/studentsetup/studentsetup.compo
 import { EnrolllistComponent } from './enroll/enrolllist/enrolllist.component';
 import { EnrollsetupComponent } from './enroll/enrollsetup/enrollsetup.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { CoachlistComponent } from './coach/coachlist/coachlist.component';
+import { CoachsetupComponent } from './coach/coachsetup/coachsetup.component';
 
 @NgModule({
    declarations: [
@@ -41,6 +43,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
       EnrolllistComponent,
       EnrollsetupComponent,
       PagenotfoundComponent,
+      CoachlistComponent,
+      CoachsetupComponent,
    ],
    imports: [
       BrowserModule,

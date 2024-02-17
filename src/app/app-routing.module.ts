@@ -13,6 +13,8 @@ import { StudentsetupComponent } from './student/studentsetup/studentsetup.compo
 import { EnrolllistComponent } from './enroll/enrolllist/enrolllist.component';
 import { EnrollsetupComponent } from './enroll/enrollsetup/enrollsetup.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { CoachlistComponent } from './coach/coachlist/coachlist.component';
+import { CoachsetupComponent } from './coach/coachsetup/coachsetup.component';
 
 
 const routes: Routes = [
@@ -73,6 +75,16 @@ const routes: Routes = [
   {
     path: 'enroll/:id',
     component: EnrollsetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'coaches',
+    component: CoachlistComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'coach/:id',
+    component: CoachsetupComponent,
     canActivate: [AuthGuard]
   },
   { path: '**', component: PagenotfoundComponent }

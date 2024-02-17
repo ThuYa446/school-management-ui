@@ -1,0 +1,19 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+    <table class="table table-striped">
+        <tr class="table-primary" style="margin-top:20px;">
+            <th scope="col">#</th>
+            <th scope="col">Teacher Name</th>
+            <th scope="col">Coach Subjects</th>
+        </tr>
+        <tr class="table-secondary" *ngFor="let teacher of teachers">
+            <td><button class="btn btn-primary" (click)="editForm(teacher.id)">Edit</button></td>
+            <td>{{teacher.name}}</td>
+            <td>
+                <ng-container *ngFor="let subject of teacher.subjects">
+                    <div><span>Name: </span>{{subject.title}}</div> 
+                </ng-container>
+            </td>
+        </tr>
+    </table>
+</div>

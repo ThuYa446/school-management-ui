@@ -1,0 +1,82 @@
+<app-menu></app-menu>
+<div class="container">
+    <form>
+        <legend>Coach Setup Form</legend>
+        <div class="row" style="margin-left: 0px;">
+            <button class="btn btn-primary" (click)="addCoach()">Add Subject</button>&nbsp;
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Teacher Name" 
+                [(ngModel)]=teacher.name [ngModelOptions]='{standalone: true}' [readonly]="true">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" placeholder="Teacher Email"
+                [(ngModel)]=teacher.email [ngModelOptions]='{standalone: true}' [readonly]="true">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="phone">Phone:</label>
+                <input type="text" class="form-control" id="phone" placeholder="Teacher Phone"
+                [(ngModel)]=teacher.phoneNo [ngModelOptions]='{standalone: true}' [readonly]="true">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="address">Address:</label>
+                <textarea class="form-control" id="address" placeholder="Teacher Address"
+                [(ngModel)]=teacher.address [ngModelOptions]='{standalone: true}' [readonly]="true"></textarea>
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <tr class="table-primary">
+            <th scope="col">Subject Name</th>
+            <th scope="col">Created Date Time</th>
+            <th scope="col">Updated Date Time</th>
+        </tr>
+        <tr *ngFor="let subject of teacher.subjects" class="table-secondary">
+            <td>{{subject.title}}</td>
+            <td>{{subject.createdAt}}</td>
+            <td>{{subject.updatedAt}}</td>
+        </tr>
+    </table>
+</div>
+
+<!-- Popup to show subjects -->
+<div id="coachpopup" class="modal" role="dialog">
+    <div id="coachpopupsize" class="modal-dialog modal-xl">  
+        <div class="modal-content">
+            <div class="modal-header">
+              <h4 id="coachpopuptitle" class="modal-title">Coach Subject Form</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div> 
+            <div id="coachpopupbody" class="modal-body"> 
+                <table class="table table-striped">
+                    <tr class="table-primary">
+                        <th scope="col">#</th>
+                        <th scope="col">Subject Title</th>
+                        <th scope="col">Created Date Time</th>
+                        <th scope="col">Updated Date Time</th>
+                    </tr>
+                    <tr *ngFor="let subject of subjects" class="table-secondary">
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" (change)="selectSubject(subject,$event)">
+                            </div>
+                        </td>
+                        <td>{{subject.title}}</td>
+                        <td>{{subject.createdAt}}</td>
+                        <td>{{subject.updatedAt}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="coachSubject();" [disabled]="subjects.length<=0">Coach</button>
+            </div>
+        </div>
+    </div>
+  </div> 

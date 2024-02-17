@@ -13,7 +13,7 @@ declare var jQuery: any;
 })
 export class CoachsetupComponent implements OnInit {
   apiUrl = environment.apiUrl + '/teachers';
-  subjectApiUrl = environment.apiUrl + '/subjects';
+  subjectApiUrl = environment.apiUrl + '/subjects/not-taught';
   id: number = 0;
   teacher: Teacher = new Teacher();
   subjects: Subject[] = [];
@@ -35,7 +35,7 @@ export class CoachsetupComponent implements OnInit {
               subject.updatedAt = new Date(subject.updatedAt).toLocaleString();
             });
         }else{
-          this.showCustomMsg('No data found',1);
+          this.showCustomMsg('There is no free subject to teach.',1);
         }
         this.showloading(false);
       },

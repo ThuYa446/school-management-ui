@@ -11,52 +11,60 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./subjectlist.component.css']
 })
 export class SubjectlistComponent implements OnInit {
-  apiUrl = environment.apiUrl+'/subjects';
-  subjects : Subject [] = [];
+  apiUrl = environment.apiUrl + '/subjects';
+  subjects: Subject[] = [];
 
-  constructor(private http:HttpClientService,
-    private ics: IntercomService,private router: Router) { 
-      this.getAllSubjects();
+  constructor(private http: HttpClientService,
+    private ics: IntercomService, private router: Router) {
+    this.getAllSubjects();
   }
 
   ngOnInit() {
   }
 
-  newSubject(){
-    this.router.navigate(['subject',0]);
+  newSubject() {
+    this.router.navigate(['subject', 0]);
   }
-  getAllSubjects(){
+  getAllSubjects() {
+    this.showloading(true);
     this.http.doGet(this.apiUrl).subscribe(
       (data) => {
-        if(data!= null && data != undefined && data.length != 0){
-            this.subjects = data;
-            this.subjects.forEach(subject => {
-              subject.createdAt = new Date(subject.createdAt).toLocaleString();
-              subject.updatedAt = new Date(subject.updatedAt).toLocaleString();
-            });
-        }else{
-          this.showCustomMsg('No data found',1);
+        if (data != null && data != undefined && data.length != 0) {
+          this.subjects = data;
+          this.subjects.forEach(subject => {
+            subject.createdAt = new Date(subject.createdAt).toLocaleString();
+            subject.updatedAt = new Date(subject.updatedAt).toLocaleString();
+          });
+        } else {
+          this.showCustomMsg('No data found', 1);
         }
+        this.showloading(false);
       },
       (error) => {
-        if(error == undefined){
-          this.showCustomMsg('Network Connection Error',2);
-        }else{
-          this.showCustomMsg(error,2);
+        if (error == undefined) {
+          this.showCustomMsg('Network Connection Error', 2);
+        } else {
+          this.showCustomMsg(error, 2);
         }
+        this.showloading(false);
       }
     );
   }
 
-  showCustomMsg(msg, type) {
-    if ( type === 1) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Information' }); }
-    if ( type === 2) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Error' }); }
-    if ( type === 3) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
-    if ( type === 4) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Success' }); }
+  editForm(id: number) {
+    this.router.navigate(['subject', id]);
   }
 
-  editForm(id:number){
-    this.router.navigate(['subject',id]);
+  showCustomMsg(msg, type) {
+    if (type === 1) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Information' }); }
+    if (type === 2) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Error' }); }
+    if (type === 3) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
+    if (type === 4) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Success' }); }
+  }
+
+  showloading(type) {
+    if (type === true) { this.ics.sendBean({ t1: 'custom-loading' }); }
+    if (type === false) { this.ics.sendBean({ t1: 'custom-loading-off' }); }
   }
 
 }

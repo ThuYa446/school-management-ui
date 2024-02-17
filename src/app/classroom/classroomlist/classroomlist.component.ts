@@ -1,41 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Teacher } from 'src/app/model/Teacher';
+import { ClassRoom } from 'src/app/model/ClassRoom';
 import { HttpClientService } from 'src/app/services/httpClient.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-coachlist',
-  templateUrl: './coachlist.component.html',
-  styleUrls: ['./coachlist.component.css']
+  selector: 'app-classroomlist',
+  templateUrl: './classroomlist.component.html',
+  styleUrls: ['./classroomlist.component.css']
 })
-export class CoachlistComponent implements OnInit {
-  apiUrl = environment.apiUrl+'/teachers';
-  teachers : Teacher [] = [];
+export class ClassroomlistComponent implements OnInit {
+  apiUrl = environment.apiUrl+'/class-rooms';
+  classRooms : ClassRoom [] = [];
 
   constructor(private http:HttpClientService,
     private ics: IntercomService,private router: Router) { 
-      this.getAllTeachers();
+      this.getAllClassRooms();
   }
 
   ngOnInit() {
   }
 
-  newTeacher(){
-    this.router.navigate(['coach',0]);
+  newSubject(){
+    this.router.navigate(['class',0]);
   }
-
-  getAllTeachers(){
-   this.showloading(true);
+  getAllClassRooms(){
+    this.showloading(true);
     this.http.doGet(this.apiUrl).subscribe(
       (data) => {
-        if(data!= null || data != undefined){
-            this.teachers = data;
-            this.teachers.forEach(teacher => {
-              teacher.createdAt = new Date(teacher.createdAt).toLocaleString();
-              teacher.updatedAt = new Date(teacher.updatedAt).toLocaleString();
+        if(data!= null && data != undefined && data.length != 0){
+            this.classRooms = data;
+            this.classRooms.forEach(classRoom => {
+              classRoom.createdAt = new Date(classRoom.createdAt).toLocaleString();
+              classRoom.updatedAt = new Date(classRoom.updatedAt).toLocaleString();
             });
+        }else{
+          this.showCustomMsg('No data found',1);
         }
         this.showloading(false);
       },
@@ -51,7 +52,7 @@ export class CoachlistComponent implements OnInit {
   }
 
   editForm(id:number){
-    this.router.navigate(['coach',id]);
+    this.router.navigate(['class',id]);
   }
 
   showCustomMsg(msg, type) {

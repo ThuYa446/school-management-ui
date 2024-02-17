@@ -11,52 +11,58 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./teacherlist.component.css']
 })
 export class TeacherlistComponent implements OnInit {
-  apiUrl = environment.apiUrl+'/teachers';
-  teachers : Teacher [] = [];
+  apiUrl = environment.apiUrl + '/teachers';
+  teachers: Teacher[] = [];
 
-  constructor(private http:HttpClientService,
-    private ics: IntercomService,private router: Router) { 
-      this.getAllTeachers();
+  constructor(private http: HttpClientService,
+    private ics: IntercomService, private router: Router) {
+    this.getAllTeachers();
   }
 
   ngOnInit() {
   }
 
-  newTeacher(){
-    this.router.navigate(['teacher',0]);
+  newTeacher() {
+    this.router.navigate(['teacher', 0]);
   }
 
-  getAllTeachers(){
-   
+  getAllTeachers() {
+    this.showloading(true);
     this.http.doGet(this.apiUrl).subscribe(
       (data) => {
-        if(data!= null || data != undefined){
-            this.teachers = data;
-            this.teachers.forEach(teacher => {
-              teacher.createdAt = new Date(teacher.createdAt).toLocaleString();
-              teacher.updatedAt = new Date(teacher.updatedAt).toLocaleString();
-            });
+        if (data != null || data != undefined) {
+          this.teachers = data;
+          this.teachers.forEach(teacher => {
+            teacher.createdAt = new Date(teacher.createdAt).toLocaleString();
+            teacher.updatedAt = new Date(teacher.updatedAt).toLocaleString();
+          });
         }
+        this.showloading(false);
       },
       (error) => {
-        if(error == undefined){
-          this.showCustomMsg('Network Connection Error',2);
-        }else{
-          this.showCustomMsg(error,2);
+        if (error == undefined) {
+          this.showCustomMsg('Network Connection Error', 2);
+        } else {
+          this.showCustomMsg(error, 2);
         }
+        this.showloading(false);
       }
     );
   }
 
+  editForm(id: number) {
+    this.router.navigate(['teacher', id]);
+  }
+
   showCustomMsg(msg, type) {
-    if ( type === 1) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Information' }); }
-    if ( type === 2) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Error' }); }
-    if ( type === 3) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
-    if ( type === 4) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Success' }); }
+    if (type === 1) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Information' }); }
+    if (type === 2) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Error' }); }
+    if (type === 3) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
+    if (type === 4) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Success' }); }
   }
 
-  editForm(id:number){
-    this.router.navigate(['teacher',id]);
+  showloading(type) {
+    if (type === true) { this.ics.sendBean({ t1: 'custom-loading' }); }
+    if (type === false) { this.ics.sendBean({ t1: 'custom-loading-off' }); }
   }
-
 }

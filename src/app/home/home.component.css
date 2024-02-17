@@ -1,0 +1,8 @@
+h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    font-family: 'Times New Roman', Times, serif;
+    color: #007bff;
+}

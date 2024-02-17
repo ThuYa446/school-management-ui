@@ -25,6 +25,7 @@ export class CoachsetupComponent implements OnInit {
   }
 
   getAllSubjects(){
+    this.showloading(true);
     this.http.doGet(this.subjectApiUrl).subscribe(
       (data) => {
         if(data!= null && data != undefined && data.length != 0){
@@ -36,6 +37,7 @@ export class CoachsetupComponent implements OnInit {
         }else{
           this.showCustomMsg('No data found',1);
         }
+        this.showloading(false);
       },
       (error) => {
         if(error == undefined){
@@ -43,6 +45,7 @@ export class CoachsetupComponent implements OnInit {
         }else{
           this.showCustomMsg(error,2);
         }
+        this.showloading(false);
       }
     );
   }
@@ -64,11 +67,12 @@ export class CoachsetupComponent implements OnInit {
       subject.createdAt = new Date(subject.createdAt);
       subject.updatedAt = new Date(subject.updatedAt);
     });
-
+    this.showloading(true);
     this.http.doPut(this.apiUrl + '/' + this.id, jsonObj).subscribe(
       (data) => {
         this.showCustomMsg('Coach updated successfully', 4);
         this.router.navigate(['coaches']);
+        this.showloading(false);
       },
       (error) => {
         if (error == undefined) {
@@ -76,11 +80,13 @@ export class CoachsetupComponent implements OnInit {
         } else {
           this.showCustomMsg(error, 2);
         }
+        this.showloading(false);
       }
     );
   }
 
   getTeacherById() {
+    this.showloading(true);
     this.http.doGet(this.apiUrl + '/' + this.id).subscribe(
       (data) => {
         if (data != null || data != undefined) {
@@ -90,6 +96,7 @@ export class CoachsetupComponent implements OnInit {
             subject.updatedAt = new Date(subject.updatedAt).toLocaleString();
           });
         }
+        this.showloading(false);
       },
       (error) => {
         if (error == undefined) {
@@ -97,6 +104,7 @@ export class CoachsetupComponent implements OnInit {
         } else {
           this.showCustomMsg(error, 2);
         }
+        this.showloading(false);
       }
     );
   }
@@ -130,5 +138,10 @@ export class CoachsetupComponent implements OnInit {
     if (type === 2) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Error' }); }
     if (type === 3) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
     if (type === 4) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Success' }); }
+  }
+
+  showloading(type) {
+    if (type === true) {this.ics.sendBean({t1: 'custom-loading'}); }
+    if (type === false) {this.ics.sendBean({t1: 'custom-loading-off'}); }
   }
 }

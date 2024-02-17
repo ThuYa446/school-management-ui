@@ -11,105 +11,120 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./teachersetup.component.css']
 })
 export class TeachersetupComponent implements OnInit {
-  apiUrl = environment.apiUrl+'/teachers';
+  apiUrl = environment.apiUrl + '/teachers';
   id: number = 0;
   teacher: Teacher = new Teacher();
 
-  constructor(private http:HttpClientService,
-    private ics: IntercomService,private route: ActivatedRoute,
-    private router: Router) { 
+  constructor(private http: HttpClientService,
+    private ics: IntercomService, private route: ActivatedRoute,
+    private router: Router) {
   }
 
-  newTeacherForm(){
+  newTeacherForm() {
     this.teacher = new Teacher();
     this.id = 0;
   }
 
-  validateTeacher(){
-    if(this.teacher.name == null || this.teacher.name == ''){
-      this.showCustomMsg('Name is required',1);
+  validateTeacher() {
+    if (this.teacher.name == null || this.teacher.name == '') {
+      this.showCustomMsg('Name is required', 1);
       return false;
     }
-    if(this.teacher.email == null || this.teacher.email == ''){
-      this.showCustomMsg('Email is required',1);
+    if (this.teacher.email == null || this.teacher.email == '') {
+      this.showCustomMsg('Email is required', 1);
       return false;
     }
-    if(this.teacher.phoneNo == null || this.teacher.phoneNo == ''){
-      this.showCustomMsg('Phone number is required',1);
+    if (this.teacher.phoneNo == null || this.teacher.phoneNo == '') {
+      this.showCustomMsg('Phone number is required', 1);
       return false;
     }
-    if(this.teacher.address == null || this.teacher.address == ''){
-      this.showCustomMsg('Address is required',1);
+    if (this.teacher.address == null || this.teacher.address == '') {
+      this.showCustomMsg('Address is required', 1);
       return false;
     }
     return true;
   }
 
-  saveTeacher(){
-    if(this.validateTeacher()){
-      let jsonObj = JSON.parse(JSON.stringify( this.teacher));
-      if(this.teacher.id == null || this.teacher.id == 0){
-        this.http.doPost(this.apiUrl,jsonObj).subscribe(
+  saveTeacher() {
+    if (this.validateTeacher()) {
+      this.showloading(true);
+      let jsonObj = JSON.parse(JSON.stringify(this.teacher));
+      if (this.teacher.id == null || this.teacher.id == 0) {
+        this.http.doPost(this.apiUrl, jsonObj).subscribe(
           (data) => {
-            this.showCustomMsg('Teacher added successfully',4);
+            this.showCustomMsg('Teacher added successfully', 4);
             this.router.navigate(['teachers']);
+            this.showloading(false);
           },
           (error) => {
-            if(error == undefined){
-              this.showCustomMsg('Network Connection Error',2);
-            }else{
-              this.showCustomMsg(error,2);
+            if (error == undefined) {
+              this.showCustomMsg('Network Connection Error', 2);
+            } else {
+              this.showCustomMsg(error, 2);
             }
+            this.showloading(false);
           }
         );
-      }else{
-        this.http.doPut(this.apiUrl+'/'+this.id,jsonObj).subscribe(
+      } else {
+        this.http.doPut(this.apiUrl + '/' + this.id, jsonObj).subscribe(
           (data) => {
-            this.showCustomMsg('Teacher updated successfully',4);
+            this.showCustomMsg('Teacher updated successfully', 4);
             this.router.navigate(['teachers']);
+            this.showloading(false);
           },
           (error) => {
-            if(error == undefined){
-              this.showCustomMsg('Network Connection Error',2);
-            }else{
-              this.showCustomMsg(error,2);
+            if (error == undefined) {
+              this.showCustomMsg('Network Connection Error', 2);
+            } else {
+              this.showCustomMsg(error, 2);
             }
+            this.showloading(false);
           }
         );
       }
     }
   }
 
-  getTeacherById(){
-    this.http.doGet(this.apiUrl+'/'+this.id).subscribe(
+  getTeacherById() {
+    this.showloading(true);
+    this.http.doGet(this.apiUrl + '/' + this.id).subscribe(
       (data) => {
-        if(data!= null || data != undefined){
+        if (data != null || data != undefined) {
           this.teacher = data;
         }
+        this.showloading(false);
       },
       (error) => {
-        if(error == undefined){
-          this.showCustomMsg('Network Connection Error',2);
-        }else{
-          this.showCustomMsg(error,2);
+        if (error == undefined) {
+          this.showCustomMsg('Network Connection Error', 2);
+        } else {
+          this.showCustomMsg(error, 2);
         }
+        this.showloading(false);
       }
     );
   }
 
   ngOnInit() {
-    if(this.route.snapshot.paramMap.get('id') != null || this.route.snapshot.paramMap.get('id') != undefined){
+    if (this.route.snapshot.paramMap.get('id') != null || this.route.snapshot.paramMap.get('id') != undefined) {
       this.id = parseInt(this.route.snapshot.paramMap.get('id'));
-      if(this.id != 0){
+      if (this.id != 0) {
         this.getTeacherById();
       }
     }
   }
 
+
   showCustomMsg(msg, type) {
-    if ( type === 1) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Information' }); }
-    if ( type === 2) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Error' }); }
-    if ( type === 3) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
-    if ( type === 4) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Success' }); }
+    if (type === 1) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Information' }); }
+    if (type === 2) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Error' }); }
+    if (type === 3) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
+    if (type === 4) { this.ics.sendBean({ t1: 'custom-msg', t2: msg, t3: 'Success' }); }
   }
+
+  showloading(type) {
+    if (type === true) { this.ics.sendBean({ t1: 'custom-loading' }); }
+    if (type === false) { this.ics.sendBean({ t1: 'custom-loading-off' }); }
+  }
+
 }

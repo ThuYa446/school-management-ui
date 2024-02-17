@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ClassRoom } from 'src/app/model/ClassRoom';
 import { Student } from 'src/app/model/Student';
-import { Subject } from 'src/app/model/Subject';
 import { HttpClientService } from 'src/app/services/httpClient.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { environment } from 'src/environments/environment';
 
 declare var jQuery: any;
 @Component({
-  selector: 'app-enrollsetup',
-  templateUrl: './enrollsetup.component.html',
-  styleUrls: ['./enrollsetup.component.css']
+  selector: 'app-manageclasssetup',
+  templateUrl: './manageclasssetup.component.html',
+  styleUrls: ['./manageclasssetup.component.css']
 })
-export class EnrollsetupComponent implements OnInit {
-  apiUrl = environment.apiUrl + '/subjects';
-  studentApiUrl = environment.apiUrl + '/students/unregister';
+export class ManageclasssetupComponent implements OnInit {
+  apiUrl = environment.apiUrl + '/class-rooms';
+  studentApiUrl = environment.apiUrl + '/students/not-joined';
   id: number = 0;
-  subject: Subject = new Subject();
+  classRoom: ClassRoom = new ClassRoom();
   students: Student[] = [];
   selectedStudent: Student[] = [];
 
@@ -25,15 +25,7 @@ export class EnrollsetupComponent implements OnInit {
     private router: Router) {
   }
 
-  validateSubject() {
-    if (this.subject.title == null || this.subject.title == '') {
-      this.showCustomMsg('Title is required', 1);
-      return false;
-    }
-    return true;
-  }
-
-  getAllUnRegisteredStudents() {
+  getAllStudentsNotJoinClass() {
     this.showloading(true);
     this.http.doGet(this.studentApiUrl).subscribe(
       (data) => {
@@ -49,69 +41,51 @@ export class EnrollsetupComponent implements OnInit {
         this.showloading(false);
       },
       (error) => {
-        this.showCustomMsg(error, 2);
+        if (error == undefined) {
+          this.showCustomMsg('Network Connection Error', 2);
+        } else {
+          this.showCustomMsg(error, 2);
+        }
         this.showloading(false);
       }
     );
   }
 
-  saveSubject() {
-    if (this.validateSubject()) {
-      this.showloading(true);
-      let jsonObj = JSON.parse(JSON.stringify(this.subject));
-      jsonObj.createdAt = new Date(jsonObj.createdAt);
-      jsonObj.updatedAt = new Date(jsonObj.updatedAt);
-      jsonObj.studentDto.forEach(student => {
-        student.createdAt = new Date(student.createdAt);
-        student.updatedAt = new Date(student.updatedAt);
-      });
-      if (this.subject.id == null || this.subject.id == 0) {
-        this.http.doPost(this.apiUrl, jsonObj).subscribe(
-          (data) => {
-            this.showCustomMsg('Subject added successfully', 4);
-            this.router.navigate(['enrolls']);
-            this.showloading(false);
-          },
-          (error) => {
-            this.showCustomMsg(error, 2);
-            this.showloading(false);
-          }
-        );
-      } else {
-        this.http.doPut(this.apiUrl + '/' + this.id, jsonObj).subscribe(
-          (data) => {
-            this.showCustomMsg('Subject updated successfully', 4);
-            this.router.navigate(['enrolls']);
-            this.showloading(false);
-          },
-          (error) => {
-            this.showCustomMsg(error, 2);
-            this.showloading(false);
-          }
-        );
-      }
-    }
-  }
+  saveStudent() {
+    let jsonObj = JSON.parse(JSON.stringify(this.classRoom));
+    jsonObj.createdAt = new Date(jsonObj.createdAt);
+    jsonObj.updatedAt = new Date(jsonObj.updatedAt);
+    jsonObj.studentDto.forEach(student => {
+      student.createdAt = new Date(student.createdAt);
+      student.updatedAt = new Date(student.updatedAt);
+    });
 
-  getSubjectById() {
-    this.showloading(true);
-    this.http.doGet(this.apiUrl + '/' + this.id).subscribe(
+    this.http.doPut(this.apiUrl + '/' + this.id, jsonObj).subscribe(
       (data) => {
-        if (data != null || data != undefined) {
-          this.subject = data;
-          console.log(this.subject);
-        }
-        this.showloading(false);
+        this.showCustomMsg('Student updated successfully', 4);
+        this.router.navigate(['manageclasses']);
       },
       (error) => {
         this.showCustomMsg(error, 2);
-        this.showloading(false);
+      }
+    );
+  }
+
+  getClassRoomById() {
+    this.http.doGet(this.apiUrl + '/' + this.id).subscribe(
+      (data) => {
+        if (data != null || data != undefined) {
+          this.classRoom = data;
+        }
+      },
+      (error) => {
+        this.showCustomMsg(error, 2);
       }
     );
   }
 
   addStudent() {
-    jQuery("#enrollpopup").modal();
+    jQuery("#attendpopup").modal();
     this.selectedStudent = [];
   }
 
@@ -124,12 +98,12 @@ export class EnrollsetupComponent implements OnInit {
     }
   }
 
-  enrollStudent() {
+  joinStudentToClass() {
     if (this.selectedStudent.length == 0) {
       this.showCustomMsg('Please select student', 1);
     } else {
-      this.subject.studentDto = this.selectedStudent;
-      this.saveSubject();
+      this.classRoom.studentDto = this.selectedStudent;
+      this.saveStudent();
     }
   }
 
@@ -137,8 +111,8 @@ export class EnrollsetupComponent implements OnInit {
     if (this.route.snapshot.paramMap.get('id') != null || this.route.snapshot.paramMap.get('id') != undefined) {
       this.id = parseInt(this.route.snapshot.paramMap.get('id'));
       if (this.id != 0) {
-        this.getSubjectById();
-        this.getAllUnRegisteredStudents();
+        this.getClassRoomById();
+        this.getAllStudentsNotJoinClass();
       }
     }
   }

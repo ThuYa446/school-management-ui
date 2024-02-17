@@ -15,6 +15,10 @@ import { EnrollsetupComponent } from './enroll/enrollsetup/enrollsetup.component
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CoachlistComponent } from './coach/coachlist/coachlist.component';
 import { CoachsetupComponent } from './coach/coachsetup/coachsetup.component';
+import { ClassroomlistComponent } from './classroom/classroomlist/classroomlist.component';
+import { ClassroomsetupComponent } from './classroom/classroomsetup/classroomsetup.component';
+import { ManageclasslistComponent } from './studentinclass/manageclasslist/manageclasslist.component';
+import { ManageclasssetupComponent } from './studentinclass/manageclasssetup/manageclasssetup.component';
 
 
 const routes: Routes = [
@@ -85,6 +89,26 @@ const routes: Routes = [
   {
     path: 'coach/:id',
     component: CoachsetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'classess',
+    component: ClassroomlistComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'class/:id',
+    component: ClassroomsetupComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manageclasses',
+    component: ManageclasslistComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manageclass/:id',
+    component: ManageclasssetupComponent,
     canActivate: [AuthGuard]
   },
   { path: '**', component: PagenotfoundComponent }

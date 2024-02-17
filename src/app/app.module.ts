@@ -27,6 +27,10 @@ import { EnrollsetupComponent } from './enroll/enrollsetup/enrollsetup.component
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CoachlistComponent } from './coach/coachlist/coachlist.component';
 import { CoachsetupComponent } from './coach/coachsetup/coachsetup.component';
+import { ManageclasslistComponent } from './studentinclass/manageclasslist/manageclasslist.component';
+import { ManageclasssetupComponent } from './studentinclass/manageclasssetup/manageclasssetup.component';
+import { ClassroomlistComponent } from './classroom/classroomlist/classroomlist.component';
+import { ClassroomsetupComponent } from './classroom/classroomsetup/classroomsetup.component';
 
 @NgModule({
    declarations: [
@@ -45,6 +49,10 @@ import { CoachsetupComponent } from './coach/coachsetup/coachsetup.component';
       PagenotfoundComponent,
       CoachlistComponent,
       CoachsetupComponent,
+      ManageclasslistComponent,
+      ManageclasssetupComponent,
+      ClassroomlistComponent,
+      ClassroomsetupComponent,
    ],
    imports: [
       BrowserModule,

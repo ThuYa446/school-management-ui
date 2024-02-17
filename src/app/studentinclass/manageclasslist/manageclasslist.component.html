@@ -3,14 +3,14 @@
     <table class="table table-striped">
         <tr class="table-primary" style="margin-top:20px;">
             <th scope="col">#</th>
-            <th scope="col">Subject Title</th>
-            <th scope="col">Enrolled Student</th>
+            <th scope="col">Class Name </th>
+            <th scope="col">Attended Student</th>
         </tr>
-        <tr class="table-secondary" *ngFor="let subject of subjects">
-            <td><button class="btn btn-primary" (click)="editForm(subject.id)">Edit</button></td>
-            <td>{{subject.title}}</td>
+        <tr class="table-secondary" *ngFor="let classRoom of classRooms">
+            <td><button class="btn btn-primary" (click)="editForm(classRoom.id)">Edit</button></td>
+            <td>{{classRoom.className}}</td>
             <td>
-                <ng-container *ngFor="let student of subject.studentDto">
+                <ng-container *ngFor="let student of classRoom.studentDto">
                     <div><span>Name: </span>{{student.name}}</div> 
                     <div><span>Email: </span>{{student.email}}</div> 
                     <div><span>Type: </span> {{student.studentType}}</div>

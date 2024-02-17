@@ -23,13 +23,6 @@ export class LoginComponent implements OnInit {
 
   }
 
-  showCustomMsg(msg, type) {
-    if ( type === 1) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Information' }); }
-    if ( type === 2) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Error' }); }
-    if ( type === 3) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
-    if ( type === 4) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Success' }); }
-  }
-
   validateLogIn(){
     if(this.user.email == null || this.user.email == undefined || this.user.email == ''){
       this.showCustomMsg('Email is required',1);
@@ -45,13 +38,15 @@ export class LoginComponent implements OnInit {
   logIn(){
     let jsonObj = JSON.parse(JSON.stringify( this.user));
     if(this.validateLogIn()){
+      this.showloading(true);
       this.http.doPost(this.apiUrl, jsonObj).subscribe(
         (data) => {
           if(data!= null || data != undefined){
             this.ics.token = data.accessToken;  
             this.authService.login();
-            this.router.navigate(['/menu']);
+            this.router.navigate(['/home']);
           }
+          this.showloading(false);
         },
         (error) => {
           if(error == undefined){
@@ -59,8 +54,21 @@ export class LoginComponent implements OnInit {
           }else{
             this.showCustomMsg(error,2);
           }
+          this.showloading(false);
         }
       );
     }
+  }
+
+  showloading(type) {
+    if (type === true) {this.ics.sendBean({t1: 'custom-loading'}); }
+    if (type === false) {this.ics.sendBean({t1: 'custom-loading-off'}); }
+  }
+
+  showCustomMsg(msg, type) {
+    if ( type === 1) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Information' }); }
+    if ( type === 2) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Error' }); }
+    if ( type === 3) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Warning' }); }
+    if ( type === 4) {this.ics.sendBean({t1: 'custom-msg', t2: msg, t3: 'Success' }); }
   }
 }

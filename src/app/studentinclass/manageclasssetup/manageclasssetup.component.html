@@ -1,14 +1,14 @@
 <app-menu></app-menu>
 <div class="container">
     <form class="col-md-4">
-        <legend>Subject Setup Form</legend>
+        <legend>Student Attended Classroom Setup Form</legend>
         <div class="row" style="margin-left: 0px;">
             <button class="btn btn-primary" (click)="addStudent()">Add Student</button>
         </div>
         <div class="form-group">
-            <label for="name">Subject Title:</label>
-            <input type="text" class="form-control" id="name" placeholder="Subject Title" 
-            [(ngModel)]=subject.title [ngModelOptions]='{standalone: true}' [readonly]="true">
+            <label for="name">Classroom Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Class Room Title" 
+            [(ngModel)]=classRoom.className [ngModelOptions]='{standalone: true}' [readonly]="true">
         </div>
     </form>
     <table class="table table-striped">
@@ -21,7 +21,7 @@
             <th scope="col">Created Date Time</th>
             <th scope="col">Updated Date Time</th>
         </tr>
-        <tr *ngFor="let student of subject.studentDto" class="table-secondary">
+        <tr *ngFor="let student of classRoom.studentDto" class="table-secondary">
             <td>{{student.studentType}}</td>
             <td>{{student.name}}</td>
             <td>{{student.email}}</td>
@@ -34,16 +34,16 @@
 </div>
 
 <!-- Popup to show UnRegistered Student -->
-<div id="enrollpopup" class="modal" role="dialog">
-    <div id="enrollpopupsize" class="modal-dialog modal-xl">  
+<div id="attendpopup" class="modal" role="dialog">
+    <div id="attendpopupsize" class="modal-dialog modal-xl">  
         <div class="modal-content">
             <div class="modal-header">
-              <h4 id="enrollpopuptitle" class="modal-title">Student Enrolled Form</h4>
+              <h4 id="attendpopuptitle" class="modal-title">Student Attend Class Form</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div> 
-            <div id="enrollpopupbody" class="modal-body"> 
+            <div id="attendpopupbody" class="modal-body"> 
                 <table class="table table-striped">
                     <tr class="table-primary">
                         <th scope="col">#</th>
@@ -72,10 +72,8 @@
                 </table>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="enrollStudent();" [disabled]="students.length<=0">Enroll</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="joinStudentToClass();" [disabled]="students.length<=0">Attend</button>
             </div>
         </div>
     </div>
   </div> 
-
-
